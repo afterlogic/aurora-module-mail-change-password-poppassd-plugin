@@ -115,4 +115,32 @@ class Module extends \Aurora\System\Module\AbstractModule
 			}
 		}
 	}
+	
+	public function GetSettings()
+	{
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
+		
+		$sSupportedServers = implode("\n", $this->getConfig('SupportedServers', ''));
+		
+		$aAppData = array(
+			'SupportedServers' => $sSupportedServers,
+			'Host' => $this->getConfig('Host', ''),
+			'Port' => $this->getConfig('Port', 0),
+		);
+
+		return $aAppData;
+	}
+	
+	public function UpdateSettings($SupportedServers, $Host, $Port)
+	{
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::TenantAdmin);
+		
+		$aSupportedServers = preg_split('/\r\n|[\r\n]/', $SupportedServers);
+		
+		$this->setConfig('SupportedServers', $aSupportedServers);
+		$this->setConfig('Host', $Host);
+		$this->setConfig('Port', $Port);
+		$this->saveModuleConfig();
+		return true;
+	}
 }
