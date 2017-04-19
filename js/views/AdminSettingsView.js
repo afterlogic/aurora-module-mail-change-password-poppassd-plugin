@@ -20,6 +20,7 @@ function CPoppassdAdminSettingsView()
 	CAbstractSettingsFormView.call(this, '%ModuleName%');
 
 	/* Editable fields */
+//	this.enabled = ko.observable(!Settings.Disabled);
 	this.supportedServers = ko.observable(Settings.SupportedServers);
 	this.host = ko.observable(Settings.Host);
 	this.port = ko.observable(Settings.Port);
@@ -33,6 +34,7 @@ CPoppassdAdminSettingsView.prototype.ViewTemplate = '%ModuleName%_AdminSettingsV
 CPoppassdAdminSettingsView.prototype.getCurrentValues = function ()
 {
 	return [
+//		!this.enabled(),
 		Types.pString(this.supportedServers()),
 		Types.pString(this.host()),
 		Types.pInt(this.port())
@@ -41,6 +43,7 @@ CPoppassdAdminSettingsView.prototype.getCurrentValues = function ()
 
 CPoppassdAdminSettingsView.prototype.revertGlobalValues = function ()
 {
+//	this.enabled(!Settings.Disabled);
 	this.supportedServers(Settings.SupportedServers);
 	this.host(Settings.Host);
 	this.port(Settings.Port);
@@ -49,6 +52,7 @@ CPoppassdAdminSettingsView.prototype.revertGlobalValues = function ()
 CPoppassdAdminSettingsView.prototype.getParametersForSave = function ()
 {
 	return {
+//		'Disabled': !this.enabled(),
 		'SupportedServers': Types.pString(this.supportedServers()),
 		'Host': Types.pString(this.host()),
 		'Port': Types.pInt(this.port())
@@ -60,6 +64,7 @@ CPoppassdAdminSettingsView.prototype.getParametersForSave = function ()
  */
 CPoppassdAdminSettingsView.prototype.applySavedValues = function (oParameters)
 {
+//	Settings.updateAdmin(oParameters.Disabled, oParameters.SupportedServers, oParameters.Host, oParameters.Port);
 	Settings.updateAdmin(oParameters.SupportedServers, oParameters.Host, oParameters.Port);
 };
 

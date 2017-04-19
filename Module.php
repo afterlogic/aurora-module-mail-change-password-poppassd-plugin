@@ -120,9 +120,10 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::Anonymous);
 		
-		$sSupportedServers = implode("\n", $this->getConfig('SupportedServers', ''));
+		$sSupportedServers = implode("\n", $this->getConfig('SupportedServers', array()));
 		
 		$aAppData = array(
+//			'Disabled' => $this->getConfig('Disabled', false),
 			'SupportedServers' => $sSupportedServers,
 			'Host' => $this->getConfig('Host', ''),
 			'Port' => $this->getConfig('Port', 0),
@@ -131,12 +132,14 @@ class Module extends \Aurora\System\Module\AbstractModule
 		return $aAppData;
 	}
 	
+//	public function UpdateSettings($Disabled, $SupportedServers, $Host, $Port)
 	public function UpdateSettings($SupportedServers, $Host, $Port)
 	{
 		\Aurora\System\Api::checkUserRoleIsAtLeast(\EUserRole::TenantAdmin);
 		
 		$aSupportedServers = preg_split('/\r\n|[\r\n]/', $SupportedServers);
 		
+//		$this->setConfig('Disabled', $Disabled);
 		$this->setConfig('SupportedServers', $aSupportedServers);
 		$this->setConfig('Host', $Host);
 		$this->setConfig('Port', $Port);

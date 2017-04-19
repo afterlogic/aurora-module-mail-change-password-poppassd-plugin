@@ -4,6 +4,15 @@
 <div class="panel_center">
 	<div class="fields">
 		<div class="fieldset">
+			<!--<div class="row">
+				<span class="value">
+					<label class="custom_checkbox" data-bind="css: {'checked': enabled}">
+						<span class="icon"></span>
+						<input type="checkbox" id="enable_%MODULENAME%" data-bind="checked: enabled" />
+					</label>
+					<label for="enable_%MODULENAME%" data-bind="i18n: {'key': 'COREWEBCLIENT/LABEL_ENABLE_MODULE'}"></label>
+				</span>
+			</div>-->
 			<div class="row">
 				<span class="label" data-bind="i18n: {'key': '%MODULENAME%/LABEL_MAIL_SERVERS'}"></span>
 				<span class="value">
@@ -11,12 +20,12 @@
 				</span>
 			</div>
 			<div class="row">
-				<span class="label required" data-bind="i18n: {'key': '%MODULENAME%/LABEL_HOST'}"></span>
+				<span class="label" data-bind="i18n: {'key': '%MODULENAME%/LABEL_HOST'}"></span>
 				<span class="value">
 					<input class="input" type="text" data-bind="value: host, valueUpdate: 'afterkeydown', onEnter: save">
 				</span>
 				
-				<span class="label required" style="width: auto; margin-left: 10px;" data-bind="i18n: {'key': '%MODULENAME%/LABEL_PORT'}"></span>
+				<span class="label" style="width: auto; margin-left: 10px;" data-bind="i18n: {'key': '%MODULENAME%/LABEL_PORT'}"></span>
 				
 				<span class="value">
 					<input class="input" type="text" data-bind="value: port, valueUpdate: 'afterkeydown', onEnter: save" style="width: 50px; margin-right: 5px;">
