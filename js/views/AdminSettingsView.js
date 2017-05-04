@@ -68,4 +68,9 @@ CPoppassdAdminSettingsView.prototype.applySavedValues = function (oParameters)
 	Settings.updateAdmin(oParameters.SupportedServers, oParameters.Host, oParameters.Port);
 };
 
+CPoppassdAdminSettingsView.prototype.setAccessLevel = function (sEntityType, iEntityId)
+{
+	this.visible(sEntityType === '');
+};
+
 module.exports = new CPoppassdAdminSettingsView();
