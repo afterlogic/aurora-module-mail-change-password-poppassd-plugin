@@ -81,7 +81,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 		{
 			if (null === $this->oPopPassD)
 			{
-				$this->oPopPassD = new \Aurora\System\Net\Protocols\Poppassd(
+				$this->oPopPassD = new Poppassd(
 					$this->getConfig('Host', '127.0.0.1'),
 					$this->getConfig('Port', 106)
 				);
