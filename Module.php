@@ -40,16 +40,21 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	public function onBeforeChangePassword($aArguments, &$mResult)
 	{
-		$mResult = true;
+		$bInterrupt = false;
 		
 		$oAccount = $this->oMailModule->GetAccount($aArguments['AccountId']);
 
 		if ($oAccount && $this->checkCanChangePassword($oAccount))
 		{
 			$mResult = $this->сhangePassword($oAccount, $aArguments['NewPassword']);
+			
+			if ($mResult === true)
+			{
+				$bInterrupt = true;
+			}
 		}
 		
-		return true;
+		return $bInterrupt;
 	}
 
 	/**
@@ -77,6 +82,8 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	protected function сhangePassword($oAccount, $sPassword)
 	{
+		$bResult = false;
+		
 		if (0 < strlen($oAccount->IncomingPassword) && $oAccount->IncomingPassword !== $sPassword)
 		{
 			if (null === $this->oPopPassD)
@@ -97,6 +104,10 @@ class Module extends \Aurora\System\Module\AbstractModule
 						{
 							throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountNewPasswordRejected);
 						}
+						else
+						{
+							$bResult = true;
+						}
 					}
 					else
 					{
@@ -114,6 +125,8 @@ class Module extends \Aurora\System\Module\AbstractModule
 				throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountNewPasswordUpdateError);
 			}
 		}
+		
+		return $bResult;
 	}
 	
 	public function GetSettings()
