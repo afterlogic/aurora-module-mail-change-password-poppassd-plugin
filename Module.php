@@ -58,7 +58,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	}
 
 	/**
-	 * @param CAccount $oAccount
+	 * @param \Aurora\Modules\StandardAuth\Classes\Account $oAccount
 	 * @return bool
 	 */
 	protected function checkCanChangePassword($oAccount)
@@ -78,7 +78,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 		return $bFound;
 	}
 	/**
-	 * @param CAccount $oAccount
+	 * @param \Aurora\Modules\StandardAuth\Classes\Account $oAccount
 	 */
 	protected function сhangePassword($oAccount, $sPassword)
 	{
