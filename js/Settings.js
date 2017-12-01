@@ -1,6 +1,10 @@
 'use strict';
 
-var Types = require('%PathToCoreWebclientModule%/js/utils/Types.js');
+var
+	_ = require('underscore'),
+	
+	Types = require('%PathToCoreWebclientModule%/js/utils/Types.js')
+;
 
 module.exports = {
 	ServerModuleName: 'MailChangePasswordPoppassdPlugin',
@@ -12,26 +16,34 @@ module.exports = {
 	Port: 0,
 	
 	/**
-	 * Initializes settings of the module.
+	 * Initializes settings from AppData object sections.
 	 * 
-	 * @param {Object} oAppDataSection module section in AppData.
+	 * @param {Object} oAppData Object contained modules settings.
 	 */
-	init: function (oAppDataSection)
+	init: function (oAppData)
 	{
-		if (oAppDataSection)
+		var oAppDataSection = oAppData['%ModuleName%'];
+		
+		if (!_.isEmpty(oAppDataSection))
 		{
-			this.Disabled = !!oAppDataSection.Disabled;
-			this.SupportedServers = Types.pString(oAppDataSection.SupportedServers);
-			this.Host = Types.pString(oAppDataSection.Host);
-			this.Port = Types.pInt(oAppDataSection.Port);
+			this.Disabled = Types.pBool(oAppDataSection.Disabled, this.Disabled);
+			this.SupportedServers = Types.pString(oAppDataSection.SupportedServers, this.SupportedServers);
+			this.Host = Types.pString(oAppDataSection.Host, this.Host);
+			this.Port = Types.pNonNegativeInt(oAppDataSection.Port, this.Port);
 		}
 	},
 	
-	updateAdmin: function (bDisabled, aSupportedServers, sHost, iPort)
+	/**
+	 * Updates new settings values after saving on server.
+	 * 
+	 * @param {array} aSupportedServers
+	 * @param {string} sHost
+	 * @param {number} iPort
+	 */
+	updateAdmin: function (aSupportedServers, sHost, iPort)
 	{
-		this.Disabled = !!bDisabled;
-		this.SupportedServers = Types.pString(aSupportedServers);
-		this.Host = Types.pString(sHost);
-		this.Port = Types.pInt(iPort);
+		this.SupportedServers = Types.pString(aSupportedServers, this.SupportedServers);
+		this.Host = Types.pString(sHost, this.Host);
+		this.Port = Types.pNonNegativeInt(iPort, this.Port);
 	}
 };

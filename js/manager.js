@@ -8,11 +8,10 @@ module.exports = function (oAppData) {
 		var
 			TextUtils = require('%PathToCoreWebclientModule%/js/utils/Text.js'),
 			
-			Settings = require('modules/%ModuleName%/js/Settings.js'),
-			oSettings = oAppData['%ModuleName%'] || {}
+			Settings = require('modules/%ModuleName%/js/Settings.js')
 		;
 
-		Settings.init(oSettings);
+		Settings.init(oAppData);
 
 		return {
 			start: function (ModulesManager) {

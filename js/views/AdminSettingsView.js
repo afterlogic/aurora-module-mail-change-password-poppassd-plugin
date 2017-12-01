@@ -64,7 +64,6 @@ CPoppassdAdminSettingsView.prototype.getParametersForSave = function ()
  */
 CPoppassdAdminSettingsView.prototype.applySavedValues = function (oParameters)
 {
-//	Settings.updateAdmin(oParameters.Disabled, oParameters.SupportedServers, oParameters.Host, oParameters.Port);
 	Settings.updateAdmin(oParameters.SupportedServers, oParameters.Host, oParameters.Port);
 };
 
