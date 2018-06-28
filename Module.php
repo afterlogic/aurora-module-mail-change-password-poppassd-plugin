@@ -41,21 +41,16 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	public function onBeforeChangePassword($aArguments, &$mResult)
 	{
-		$bInterrupt = false;
+		$mResult = false;
 		
 		$oAccount = $this->oMailModule->GetAccount($aArguments['AccountId']);
 
 		if ($oAccount && $this->checkCanChangePassword($oAccount))
 		{
 			$mResult = $this->сhangePassword($oAccount, $aArguments['NewPassword']);
-			
-			if ($mResult === true)
-			{
-				$bInterrupt = true;
-			}
 		}
 		
-		return $bInterrupt;
+		return !$mResult;
 	}
 
 	/**
