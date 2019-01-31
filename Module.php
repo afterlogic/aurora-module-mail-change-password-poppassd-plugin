@@ -21,6 +21,8 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	protected $oPopPassD;
 
+	protected $oMailModule;
+
 	/**
 	 * @param CApiPluginManager $oPluginManager
 	 */
@@ -28,8 +30,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	public function init() 
 	{
 		$this->oPopPassD = null;
-		
-		$this->oMailModule = \Aurora\System\Api::GetModule('Mail');
+		$this->oMailModule = null;
 	
 		$this->subscribeEvent('Mail::ChangePassword::before', array($this, 'onBeforeChangePassword'));
 	}
@@ -43,7 +44,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	{
 		$bInterrupt = false;
 		
-		$oAccount = $this->oMailModule->GetAccount($aArguments['AccountId']);
+		$oAccount = $this->getMailModule()->GetAccount($aArguments['AccountId']);
 
 		if ($oAccount && $this->checkCanChangePassword($oAccount))
 		{
@@ -68,7 +69,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 		
 		if (!$bFound)
 		{
-			$oServer = $this->oMailModule->GetServer($oAccount->ServerId);
+			$oServer = $this->getMailModule()->GetServer($oAccount->ServerId);
 
 			if ($oServer && in_array($oServer->Name, $this->getConfig('SupportedServers')))
 			{
@@ -159,5 +160,15 @@ class Module extends \Aurora\System\Module\AbstractModule
 		$this->setConfig('Port', $Port);
 		$this->saveModuleConfig();
 		return true;
+	}
+
+	protected function getMailModule()
+	{
+		if (!$this->oMailModule)
+		{
+			$this->oMailModule = \Aurora\System\Api::GetModule('Mail');
+		}
+
+		return $this->oMailModule;
 	}
 }
