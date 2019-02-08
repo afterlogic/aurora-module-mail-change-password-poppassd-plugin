@@ -42,21 +42,17 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	public function onBeforeChangePassword($aArguments, &$mResult)
 	{
-		$bInterrupt = false;
+		$bResult = false;
 		
 		$oAccount = $this->getMailModule()->GetAccount($aArguments['AccountId']);
 
-		if ($oAccount && $this->checkCanChangePassword($oAccount))
+		if ($oAccount && $this->checkCanChangePassword($oAccount) && $oAccount->getPassword() === $aArguments['CurrentPassword'])
 		{
-			$mResult = $this->сhangePassword($oAccount, $aArguments['NewPassword']);
-			
-			if ($mResult === true)
-			{
-				$bInterrupt = true;
-			}
+			//inverting result for break subscriptions in case when password wasn't change
+			$bResult = !$this->changePassword($oAccount, $aArguments['NewPassword']);
 		}
 		
-		return $bInterrupt;
+		return $bResult;
 	}
 
 	/**
@@ -82,11 +78,11 @@ class Module extends \Aurora\System\Module\AbstractModule
 	/**
 	 * @param \Aurora\Modules\StandardAuth\Classes\Account $oAccount
 	 */
-	protected function сhangePassword($oAccount, $sPassword)
+	protected function changePassword($oAccount, $sPassword)
 	{
 		$bResult = false;
 		
-		if (0 < strlen($oAccount->IncomingPassword) && $oAccount->IncomingPassword !== $sPassword)
+		if (0 < strlen($oAccount->getPassword()) && $oAccount->getPassword() !== $sPassword)
 		{
 			if (null === $this->oPopPassD)
 			{
@@ -100,7 +96,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 			{
 				try
 				{
-					if ($this->oPopPassD->Login($oAccount->IncomingLogin, $oAccount->IncomingPassword))
+					if ($this->oPopPassD->Login($oAccount->IncomingLogin, $oAccount->getPassword()))
 					{
 						if (!$this->oPopPassD->NewPass($sPassword))
 						{
