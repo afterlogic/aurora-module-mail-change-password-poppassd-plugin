@@ -22,7 +22,7 @@ module.exports = function (oAppData) {
 							function() {
 								resolve(require('modules/%ModuleName%/js/views/AdminSettingsView.js'));
 							},
-							"admin-bundle"
+							'admin-bundle'
 						);
 					},
 					Settings.HashModuleName,
