@@ -157,12 +157,12 @@ class Module extends \Aurora\System\Module\AbstractModule
 	}
 	
 	/**
-	 * Obtains list of module settings for authenticated user.
+	 * Obtains list of module settings for super admin.
 	 * @return array
 	 */
 	public function GetSettings()
 	{
-		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::Anonymous);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::SuperAdmin);
 		
 		$sSupportedServers = implode("\n", $this->getConfig('SupportedServers', array()));
 		
@@ -176,7 +176,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	}
 	
 	/**
-	 * Updates module's admin settings.
+	 * Updates module's super admin settings.
 	 * @param string $SupportedServers
 	 * @param string $Host
 	 * @param int $Port
@@ -184,7 +184,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	public function UpdateSettings($SupportedServers, $Host, $Port)
 	{
-		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::TenantAdmin);
+		\Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::SuperAdmin);
 		
 		$aSupportedServers = preg_split('/\r\n|[\r\n]/', $SupportedServers);
 		
