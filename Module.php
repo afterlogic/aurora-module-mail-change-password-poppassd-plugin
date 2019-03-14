@@ -21,8 +21,6 @@ class Module extends \Aurora\System\Module\AbstractModule
 	 */
 	protected $oPopPassD;
 
-	protected $oMailModule;
-
 	/**
 	 * @param CApiPluginManager $oPluginManager
 	 */
@@ -30,7 +28,6 @@ class Module extends \Aurora\System\Module\AbstractModule
 	public function init() 
 	{
 		$this->oPopPassD = null;
-		$this->oMailModule = null;
 	
 		$this->subscribeEvent('Mail::Account::ToResponseArray', array($this, 'onMailAccountToResponseArray'));
 		$this->subscribeEvent('Mail::ChangeAccountPassword', array($this, 'onChangeAccountPassword'));
@@ -63,11 +60,13 @@ class Module extends \Aurora\System\Module\AbstractModule
 	public function onChangeAccountPassword($aArguments, &$mResult)
 	{
 		$bPasswordChanged = false;
+		$bBreakSubscriptions = false;
 		
 		$oAccount = $aArguments['Account'];
 		if ($oAccount && $this->checkCanChangePassword($oAccount) && $oAccount->getPassword() === $aArguments['CurrentPassword'])
 		{
 			$bPasswordChanged = $this->changePassword($oAccount, $aArguments['NewPassword']);
+			$bBreakSubscriptions = true; // break if Poppassd plugin tries to change password in this account. 
 		}
 		
 		if (is_array($mResult))
@@ -75,7 +74,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 			$mResult['AccountPasswordChanged'] = $mResult['AccountPasswordChanged'] || $bPasswordChanged;
 		}
 		
-		return $bPasswordChanged; // break subscriptions if password was changed
+		return $bBreakSubscriptions;
 	}
 	
 	/**
