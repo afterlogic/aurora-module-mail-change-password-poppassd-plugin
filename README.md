@@ -9,4 +9,4 @@ In admin interface, under "Poppassd" tab, you need to supply list of mailserver 
 On the same tab, you need to provide hostname/IP and port number for connecting to POPPASSD service.
 
 # License
-This module is licensed under AGPLv3 license if free version of the product is used or AfterLogic Software License if commercial version of the product was purchased.
+This module is licensed under AGPLv3 license if free version of the product is used or Afterlogic Software License if commercial version of the product was purchased.
