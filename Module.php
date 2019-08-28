@@ -128,9 +128,10 @@ class Module extends \Aurora\System\Module\AbstractModule
 				{
 					if ($this->oPopPassD->Login($oAccount->IncomingLogin, $oAccount->getPassword()))
 					{
-						if (!$this->oPopPassD->NewPass($sPassword))
+						$aNewPasswordResult = $this->oPopPassD->NewPass($sPassword);
+						if (!$aNewPasswordResult[0])
 						{
-							throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountNewPasswordRejected);
+							throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountNewPasswordRejected, null, $aNewPasswordResult[1]);
 						}
 						else
 						{
