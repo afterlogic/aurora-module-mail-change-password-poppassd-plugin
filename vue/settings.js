@@ -1,12 +1,13 @@
 import _ from 'lodash'
+import typesUtils from 'src/utils/types'
 
 class PoppassdAdminSettings {
   constructor (appData) {
     const mailChangePasswordPoppassdPlugin = appData.MailChangePasswordPoppassdPlugin
     if (!_.isEmpty(mailChangePasswordPoppassdPlugin)) {
-      this.host = mailChangePasswordPoppassdPlugin.Host
-      this.port = mailChangePasswordPoppassdPlugin.Port
-      this.supportedServers = mailChangePasswordPoppassdPlugin.SupportedServers
+      this.host = typesUtils.pString(mailChangePasswordPoppassdPlugin.Host)
+      this.port = typesUtils.pInt(mailChangePasswordPoppassdPlugin.Port)
+      this.supportedServers = typesUtils.pString(mailChangePasswordPoppassdPlugin.SupportedServers)
     }
   }
 
