@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-class LicenseSettings {
+class PoppassdAdminSettings {
   constructor (appData) {
     const mailChangePasswordPoppassdPlugin = appData.MailChangePasswordPoppassdPlugin
     if (!_.isEmpty(mailChangePasswordPoppassdPlugin)) {
@@ -21,7 +21,7 @@ let settings = null
 
 export default {
   init (appData) {
-    settings = new LicenseSettings(appData)
+    settings = new PoppassdAdminSettings(appData)
   },
   savePoppassdSettings (data) {
     settings.savePoppassdSettings(data)
