@@ -8,7 +8,7 @@
         <q-card-section>
           <div class="row q-mb-md">
             <div class="col-2 q-mt-sm" v-t="'MAILCHANGEPASSWORDPOPPASSDPLUGIN.LABEL_MAIL_SERVERS'"></div>
-            <div class="col-4">
+            <div class="col-5">
               <q-input outlined dense class="bg-white" type="textarea" v-model="supportedServers"/>
             </div>
           </div>
@@ -22,7 +22,7 @@
           </div>
           <div class="row q-mb-md">
             <div class="col-2 q-mt-sm" v-t="'MAILCHANGEPASSWORDPOPPASSDPLUGIN.LABEL_HOST'"></div>
-            <div class="col-4">
+            <div class="col-5">
               <q-input outlined dense class="bg-white" v-model="host"/>
             </div>
             <div class="col-1 q-mt-sm q-pl-md" v-t="'MAILCHANGEPASSWORDPOPPASSDPLUGIN.LABEL_PORT'"></div>
