@@ -9,7 +9,7 @@
           <div class="row q-mb-md">
             <div class="col-2 q-mt-sm" v-t="'MAILCHANGEPASSWORDPOPPASSDPLUGIN.LABEL_MAIL_SERVERS'"></div>
             <div class="col-5">
-              <q-input outlined dense class="bg-white" type="textarea" v-model="supportedServers"/>
+              <q-input outlined dense class="bg-white input" type="textarea" v-model="supportedServers"/>
             </div>
           </div>
           <div class="row q-mb-md">
@@ -23,11 +23,11 @@
           <div class="row q-mb-md">
             <div class="col-2 q-mt-sm" v-t="'MAILCHANGEPASSWORDPOPPASSDPLUGIN.LABEL_HOST'"></div>
             <div class="col-5">
-              <q-input outlined dense class="bg-white" v-model="host"/>
+              <q-input outlined dense class="bg-white input" v-model="host"/>
             </div>
             <div class="col-1 q-mt-sm q-pl-md" v-t="'MAILCHANGEPASSWORDPOPPASSDPLUGIN.LABEL_PORT'"></div>
             <div class="col-1">
-              <q-input outlined dense class="bg-white" v-model="port"/>
+              <q-input outlined dense class="bg-white input" v-model="port"/>
             </div>
           </div>
         </q-card-section>
@@ -122,5 +122,8 @@ export default {
 </script>
 
 <style scoped>
+.input {
+  border-radius: 6px;
+}
 
 </style>
