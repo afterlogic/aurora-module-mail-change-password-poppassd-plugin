@@ -8,7 +8,7 @@
         <q-card-section>
           <div class="row q-mb-md">
             <div class="col-2 q-mt-sm" v-t="'MAILCHANGEPASSWORDPOPPASSDPLUGIN.LABEL_MAIL_SERVERS'"></div>
-            <div class="col-5">
+            <div class="col-5 textarea">
               <q-input outlined dense bg-color="white" type="textarea" v-model="supportedServers"/>
             </div>
           </div>
