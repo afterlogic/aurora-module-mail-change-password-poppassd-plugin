@@ -38,7 +38,6 @@
                @click="save"/>
       </div>
     </div>
-    <UnsavedChangesDialog ref="unsavedChangesDialog"/>
   </q-scroll-area>
 </template>
 
@@ -46,18 +45,16 @@
 import errors from 'src/utils/errors'
 import notification from 'src/utils/notification'
 import webApi from 'src/utils/web-api'
+
 import settings from '../../../MailChangePasswordPoppassdPlugin/vue/settings'
-import UnsavedChangesDialog from 'src/components/UnsavedChangesDialog'
-import _ from 'lodash'
 
 export default {
   name: 'PoppassdAdminSettings',
-  components: {
-    UnsavedChangesDialog
-  },
+
   mounted () {
     this.populate()
   },
+
   data() {
     return {
       host: '',
@@ -66,20 +63,31 @@ export default {
       saving: false
     }
   },
+
   beforeRouteLeave(to, from, next) {
-    if (this.hasChanges() && _.isFunction(this?.$refs?.unsavedChangesDialog?.openConfirmDiscardChangesDialog)) {
-      this.$refs.unsavedChangesDialog.openConfirmDiscardChangesDialog(next)
-    } else {
-      next()
-    }
+    this.doBeforeRouteLeave(to, from, next)
   },
+
   methods: {
+    /**
+     * Method is used in doBeforeRouteLeave mixin
+     */
     hasChanges() {
       const data = settings.getPoppassdSettings()
       return this.supportedServers !== data.supportedServers ||
       this.host !== data.host ||
       this.port !== data.port
     },
+
+    /**
+     * Method is used in doBeforeRouteLeave mixin,
+     * do not use async methods - just simple and plain reverting of values
+     * !! hasChanges method must return true after executing revertChanges method
+     */
+    revertChanges () {
+      this.populate()
+    },
+
     populate () {
       const data = settings.getPoppassdSettings()
       this.supportedServers = data.supportedServers
