@@ -143,7 +143,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 						throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountOldPasswordNotCorrect);
 					}
 				}
-				catch (Exception $oException)
+				catch (\Exception $oException)
 				{
 					$this->oPopPassD->Disconnect();
 					throw $oException;
