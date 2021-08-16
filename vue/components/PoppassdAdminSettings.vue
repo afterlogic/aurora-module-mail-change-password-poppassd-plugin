@@ -20,7 +20,7 @@
               </q-item-label>
             </div>
           </div>
-          <div class="row q-mb-md">
+          <div class="row">
             <div class="col-2 q-mt-sm" v-t="'MAILCHANGEPASSWORDPOPPASSDPLUGIN.LABEL_HOST'"></div>
             <div class="col-5">
               <q-input outlined dense bg-color="white" v-model="host"/>
