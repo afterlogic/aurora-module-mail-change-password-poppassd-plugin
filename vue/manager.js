@@ -3,18 +3,20 @@ import settings from '../../MailChangePasswordPoppassdPlugin/vue/settings';
 export default {
   moduleName: 'MailChangePasswordPoppassdPlugin',
 
-  requiredModules: [],
+  requiredModules: ['MailWebclient'],
+
   init (appData) {
     settings.init(appData)
   },
+
   getAdminSystemTabs () {
     return [
       {
-        tabName: 'mail-poppassd-plugin',
-        title: 'MAILCHANGEPASSWORDPOPPASSDPLUGIN.LABEL_POPPASSD_SETTINGS_TAB',
-        component () {
-          return import('./components/PoppassdAdminSettings')
-        },
+        tabName: 'poppassd',
+        tabTitle: 'MAILCHANGEPASSWORDPOPPASSDPLUGIN.LABEL_POPPASSD_SETTINGS_TAB',
+        tabRouteChildren: [
+          { path: 'poppassd', component: () => import('./components/PoppassdAdminSettings') },
+        ],
       },
     ]
   },
