@@ -19,13 +19,9 @@ namespace Aurora\Modules\MailChangePasswordPoppassdPlugin;
 class Module extends \Aurora\System\Module\AbstractModule
 {
     /**
-     * @var CApiPoppassdProtocol
+     * @var Poppassd
      */
     protected $oPopPassD;
-
-    /**
-     * @param CApiPluginManager $oPluginManager
-     */
 
     public function init()
     {
@@ -77,7 +73,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 
     /**
      * Checks if allowed to change password for account.
-     * @param \Aurora\Modules\Mail\Classes\Account $oAccount
+     * @param \Aurora\Modules\Mail\Models\MailAccount $oAccount
      * @return bool
      */
     protected function checkCanChangePassword($oAccount)
@@ -97,7 +93,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 
     /**
      * Tries to change password for account.
-     * @param \Aurora\Modules\Mail\Classes\Account $oAccount
+     * @param \Aurora\Modules\Mail\Models\MailAccount $oAccount
      * @param string $sPassword
      * @return boolean
      * @throws \Aurora\System\Exceptions\ApiException
