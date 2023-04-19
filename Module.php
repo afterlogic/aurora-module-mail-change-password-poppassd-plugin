@@ -14,6 +14,8 @@ namespace Aurora\Modules\MailChangePasswordPoppassdPlugin;
  * @license https://afterlogic.com/products/common-licensing Afterlogic Software License
  * @copyright Copyright (c) 2023, Afterlogic Corp.
  *
+ * @property Settings $oModuleSettings
+ *
  * @package Modules
  */
 class Module extends \Aurora\System\Module\AbstractModule
@@ -96,12 +98,12 @@ class Module extends \Aurora\System\Module\AbstractModule
      */
     protected function checkCanChangePassword($oAccount)
     {
-        $bFound = in_array('*', $this->getConfig('SupportedServers', array()));
+        $bFound = in_array('*', $this->oModuleSettings->SupportedServers);
 
         if (!$bFound) {
             $oServer = $oAccount->getServer();
 
-            if ($oServer && in_array($oServer->IncomingServer, $this->getConfig('SupportedServers'))) {
+            if ($oServer && in_array($oServer->IncomingServer, $this->oModuleSettings->SupportedServers)) {
                 $bFound = true;
             }
         }
@@ -123,8 +125,8 @@ class Module extends \Aurora\System\Module\AbstractModule
         if (0 < strlen($oAccount->getPassword()) && $oAccount->getPassword() !== $sPassword) {
             if (null === $this->oPopPassD) {
                 $this->oPopPassD = new Poppassd(
-                    $this->getConfig('Host', '127.0.0.1'),
-                    $this->getConfig('Port', 106)
+                    $this->oModuleSettings->Host,
+                    $this->oModuleSettings->Port
                 );
             }
 
@@ -160,12 +162,12 @@ class Module extends \Aurora\System\Module\AbstractModule
     {
         \Aurora\System\Api::checkUserRoleIsAtLeast(\Aurora\System\Enums\UserRole::SuperAdmin);
 
-        $sSupportedServers = implode("\n", $this->getConfig('SupportedServers', array()));
+        $sSupportedServers = implode("\n", $this->oModuleSettings->SupportedServers);
 
         $aAppData = array(
             'SupportedServers' => $sSupportedServers,
-            'Host' => $this->getConfig('Host', ''),
-            'Port' => $this->getConfig('Port', 0),
+            'Host' => $this->oModuleSettings->Host,
+            'Port' => $this->oModuleSettings->Port,
         );
 
         return $aAppData;
