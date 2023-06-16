@@ -31,6 +31,7 @@ class Module extends \Aurora\System\Module\AbstractModule
 
         $this->subscribeEvent('Mail::Account::ToResponseArray', array($this, 'onMailAccountToResponseArray'));
         $this->subscribeEvent('Mail::ChangeAccountPassword', array($this, 'onChangeAccountPassword'));
+        $this->subscribeEvent('StandardResetPassword::ChangeAccountPassword', array($this, 'onChangeAccountPassword'));
     }
 
     /**
@@ -85,7 +86,8 @@ class Module extends \Aurora\System\Module\AbstractModule
         $bBreakSubscriptions = false;
 
         $oAccount = $aArguments['Account'];
-        if ($oAccount && $this->checkCanChangePassword($oAccount) && $oAccount->getPassword() === $aArguments['CurrentPassword']) {
+        if ($oAccount && $this->checkCanChangePassword($oAccount) && ($oAccount->getPassword() === $aArguments['CurrentPassword']
+          || isset($aArguments['SkipCurrentPasswordCheck']) && $aArguments['SkipCurrentPasswordCheck'])) {
             $bPasswordChanged = $this->changePassword($oAccount, $aArguments['NewPassword']);
             $bBreakSubscriptions = true; // break if Poppassd plugin tries to change password in this account.
         }
