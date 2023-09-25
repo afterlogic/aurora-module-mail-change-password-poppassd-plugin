@@ -36,7 +36,7 @@ class Poppassd extends \Aurora\System\Net\AbstractProtocol
      */
     public function Login($sLogin, $sPassword)
     {
-        return $this->SendCommand('user '.$sLogin, array(), 1) && $this->SendCommand('pass '.$sPassword, array($sPassword), 1);
+        return $this->SendCommand('user ' . $sLogin, array(), 1) && $this->SendCommand('pass ' . $sPassword, array($sPassword), 1);
     }
 
     /**
@@ -82,7 +82,7 @@ class Poppassd extends \Aurora\System\Net\AbstractProtocol
         $bResult = false;
         $sMessage = '';
         $aLines = [];
-        if ($this->WriteLine('newpass '.$sNewPassword, array($sNewPassword))) {
+        if ($this->WriteLine('newpass ' . $sNewPassword, array($sNewPassword))) {
             while ($sLine = $this->GetNextLine()) {
                 $aLine = \explode(' ', $sLine);
                 if ($aLine[0] == 200) {
