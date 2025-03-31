@@ -8,6 +8,7 @@
 namespace Aurora\Modules\MailChangePasswordPoppassdPlugin;
 
 use Aurora\Modules\Mail\Models\MailAccount;
+use Aurora\System\Notifications;
 
 /**
  * Allows users to change passwords on their email accounts using POPPASSD protocol.
@@ -143,19 +144,19 @@ class Module extends \Aurora\System\Module\AbstractModule
                     if ($this->oPopPassD->Login($oAccount->IncomingLogin, $oAccount->getPassword())) {
                         $aNewPasswordResult = $this->oPopPassD->NewPass($sPassword);
                         if (!$aNewPasswordResult[0]) {
-                            throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountNewPasswordRejected, null, $aNewPasswordResult[1]);
+                            throw new \Aurora\System\Exceptions\ApiException(Notifications::CanNotChangePassword, null, $aNewPasswordResult[1]);
                         } else {
                             $bResult = true;
                         }
                     } else {
-                        throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountOldPasswordNotCorrect);
+                        throw new \Aurora\System\Exceptions\ApiException(Notifications::AccountOldPasswordNotCorrect);
                     }
                 } catch (\Exception $oException) {
                     $this->oPopPassD->Disconnect();
                     throw $oException;
                 }
             } else {
-                throw new \Aurora\System\Exceptions\ApiException(\Aurora\System\Exceptions\Errs::UserManager_AccountNewPasswordUpdateError);
+                throw new \Aurora\System\Exceptions\ApiException(Notifications::CanNotChangePassword);
             }
         }
 
